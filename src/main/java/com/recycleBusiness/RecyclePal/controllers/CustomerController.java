@@ -47,7 +47,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping("/createWasteResponse")
+    @PostMapping("/createWasteResponse")
     public ResponseEntity<?> createWasteRequest(CustomerSubmitRequest request){
         try {
             var response = service.submitRequest(request);

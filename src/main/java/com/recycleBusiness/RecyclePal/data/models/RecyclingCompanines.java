@@ -20,6 +20,7 @@ public class RecyclingCompanines {
     private Integer centerID;
     private String centerName;
     private String location;
+    private String phoneNumber;
     @OneToOne
     private Address address;
 

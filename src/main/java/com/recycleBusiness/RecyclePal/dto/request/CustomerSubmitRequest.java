@@ -21,6 +21,7 @@ public class CustomerSubmitRequest {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDateTime pickedUptime;
     private String quantity;
+    private String description;
     private Address address;
     private boolean isPicked;
 }

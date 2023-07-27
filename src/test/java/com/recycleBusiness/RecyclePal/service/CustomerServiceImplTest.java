@@ -36,6 +36,7 @@ class CustomerServiceImplTest {
         registrationRequest.setUsername("Idman");
         registrationRequest.setEmail("idrisisah1@gmail.com");
         registrationRequest.setPassword("munirat_is_the_password");
+        registrationRequest.setAddress("idrishhhh");
       registrationResponse =  services.customerRegistration(registrationRequest);
     }
     @Test

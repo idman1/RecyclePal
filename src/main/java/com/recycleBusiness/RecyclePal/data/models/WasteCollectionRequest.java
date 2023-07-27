@@ -27,6 +27,7 @@ public class WasteCollectionRequest {
     private LocalDateTime createdTime;
     private LocalDateTime pickedUptime;
     private String quantity;
+    private String description;
     @OneToOne
     private Address address;
     private boolean isPicked;
