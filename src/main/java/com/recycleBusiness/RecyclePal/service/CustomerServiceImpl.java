@@ -2,6 +2,7 @@ package com.recycleBusiness.RecyclePal.service;
 
 import com.recycleBusiness.RecyclePal.data.models.Address;
 import com.recycleBusiness.RecyclePal.data.models.Customer;
+import com.recycleBusiness.RecyclePal.data.repository.AddressRepository;
 import com.recycleBusiness.RecyclePal.data.repository.CustomerRepository;
 import com.recycleBusiness.RecyclePal.dto.request.*;
 import com.recycleBusiness.RecyclePal.dto.responce.CustomerLoginResponse;
@@ -32,12 +33,16 @@ public class CustomerServiceImpl  implements  CustomerServices{
     private final PasswordEncoder passwordEncoder;
     private final SendMailImpl  sendMail;
     private final WasteCollectionRequestServices wasteCollectionServices;
+    private final AddressRepository addressRepository;
     @Override
     public CustomerRegistrationResponse customerRegistration(CustomerRegistrationRequest registrationRequest) throws CustomerWithEmailOrUsernameExist, CustomerNotSaveIntoDataBase {
         Customer customer = modelMapper.map(registrationRequest,Customer.class);
-        Address address = new Address();
+
         boolean isPresent = validateUsernameAndPassword(customer.getUsername(),customer.getEmail());
-        customer.setAddress(address);
+        Address address = modelMapper.map(registrationRequest.getAddress(), Address.class);
+
+        Address savedAddress = addressRepository.save(address);
+        customer.setAddress(savedAddress);
 		if (isPresent)
             throw new CustomerWithEmailOrUsernameExist(String.format(USERNAME_OR_PASSWORD_NOT_VALID,customer.getEmail(),customer.getUsername()));
         String password = passwordEncoder.encode(customer.getPassword());
