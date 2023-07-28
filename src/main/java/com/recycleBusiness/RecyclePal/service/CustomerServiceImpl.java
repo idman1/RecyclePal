@@ -20,7 +20,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Set;
+
 import static com.recycleBusiness.RecyclePal.utils.AppUtils.*;
 import static com.recycleBusiness.RecyclePal.utils.ResponseMessage.USER_REGISTRATION_SUCCESSFUL;
 import static com.recycleBusiness.RecyclePal.utils.ResponseMessage.WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED;
@@ -120,7 +122,7 @@ public class CustomerServiceImpl  implements  CustomerServices{
     private EmailNotificationRequest buildEmailRequest(Customer customer){
 //        String token = JWT.create()
 //                .withIssuedAt(Instant.now())
-//                .withExpiresAt(Instant.now().plusSeconds(900 ))
+//               .withExpiresAt(Instant.now().plusSeconds(900 ))
 //                .sign(Algorithm.HMAC384("secret".getBytes()));
 
         EmailNotificationRequest request = new EmailNotificationRequest();
