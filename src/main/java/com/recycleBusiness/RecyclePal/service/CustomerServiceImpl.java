@@ -11,13 +11,13 @@ import com.recycleBusiness.RecyclePal.dto.responce.CustomerSubmitResponse;
 import com.recycleBusiness.RecyclePal.dto.responce.CustomerUpdateResponse;
 import com.recycleBusiness.RecyclePal.exception.CustomerNotSaveIntoDataBase;
 import com.recycleBusiness.RecyclePal.exception.CustomerWithEmailOrUsernameExist;
+import com.recycleBusiness.RecyclePal.exception.UsernameNotFoundException;
 import com.recycleBusiness.RecyclePal.exception.WasteNotCreated;
 import com.recycleBusiness.RecyclePal.service.mail.SendMailImpl;
 import com.recycleBusiness.RecyclePal.utils.AppUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -66,10 +66,10 @@ public class CustomerServiceImpl  implements  CustomerServices{
 
     @Override
     @Transactional
-    public CustomerUpdateResponse updateProfile(String username ,UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist {
+    public CustomerUpdateResponse updateProfile(String username ,UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException {
         Customer updateCustomer=
-                customerRepository.findByUsername(username)
-              .orElseThrow(()-> new UsernameNotFoundException(String.format(USERNAME_NOT_FOUND,username)));
+                customerRepository.findCustomerByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException(String.format(USERNAME_NOT_FOUND,username)));
         if (request.getFirstname() != null)
             updateCustomer.setFirstname(request.getFirstname());
 
@@ -78,6 +78,7 @@ public class CustomerServiceImpl  implements  CustomerServices{
 
         if (request.getPhoneNumber() != null)
             updateCustomer.setPassword(request.getPhoneNumber());
+
          customerRepository.save(updateCustomer);
         return buildUpdateResponse(updateCustomer);
     }
@@ -107,9 +108,9 @@ public class CustomerServiceImpl  implements  CustomerServices{
     }
 
     private boolean validateUsernameAndPassword(String username, String email){
-        boolean checkForUsername = customerRepository.findByUsername(username).isPresent();
+        boolean checkForUsername = customerRepository.findCustomerByUsername(username).isPresent();
         boolean checkForUserEmail = customerRepository.findByEmail(email).isPresent();
-        return checkForUsername && checkForUserEmail;
+        return checkForUsername || checkForUserEmail;
     }
 
     private CustomerRegistrationResponse buildResponse(Customer customer){

@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class Address {
     @Id
     @SequenceGenerator(
@@ -16,7 +17,6 @@ public class Address {
             sequenceName = "Customer_sequence",
             allocationSize = 1
     )
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String houseNumber;

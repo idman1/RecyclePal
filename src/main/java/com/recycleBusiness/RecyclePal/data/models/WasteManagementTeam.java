@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class WasteManagementTeam {
     @Id
     @SequenceGenerator(

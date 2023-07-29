@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class Payment {
     @Id
     @SequenceGenerator(
@@ -22,6 +23,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentID;
     private BigDecimal amount;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 }

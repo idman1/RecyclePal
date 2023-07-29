@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class RecyclingCompanines {
     @Id
     @SequenceGenerator(

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class Customer {
     @Id
     @SequenceGenerator(

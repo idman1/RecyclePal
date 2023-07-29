@@ -1,5 +1,6 @@
 package com.recycleBusiness.RecyclePal.dto.request;
 
+import com.recycleBusiness.RecyclePal.data.models.Address;
 import jakarta.persistence.Entity;
 import lombok.*;
 
@@ -9,9 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class UpdateCustomerRequest {
+    private String username;
     private String firstname;
     private String lastname;
-    private String address;
+    private AddressRequest address;
     private String phoneNumber;
-    private String username;
+
 }

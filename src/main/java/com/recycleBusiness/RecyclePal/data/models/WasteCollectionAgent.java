@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class WasteCollectionAgent {
     @Id
     @SequenceGenerator(

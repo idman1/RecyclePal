@@ -7,7 +7,6 @@ public class AppUtils {
     public static final String USERNAME_NOT_FOUND = "It appears that this %s UserName not found";
     public static final String USER_NAME_DOES_NOT_EXIST = "The username %s does not exist.";
     public static final String ACTIVATE_ACCOUNT_URL = "localhost:8080/api/v1/customer/verify %s" ;
-    public static final String MAIL_API_KEY="${sendinblue.api.key}";
     public static final String API_KEY_VALUE = "api-key";
     public static final String EMAIL_URL="https://api.brevo.com/v3/smtp/email";
     public static final String SENDER = "sender";

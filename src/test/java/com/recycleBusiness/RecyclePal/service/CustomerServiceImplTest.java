@@ -6,8 +6,7 @@ import com.recycleBusiness.RecyclePal.dto.responce.CustomerRegistrationResponse;
 import com.recycleBusiness.RecyclePal.dto.responce.CustomerUpdateResponse;
 import com.recycleBusiness.RecyclePal.exception.CustomerNotSaveIntoDataBase;
 import com.recycleBusiness.RecyclePal.exception.CustomerWithEmailOrUsernameExist;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.recycleBusiness.RecyclePal.exception.UsernameNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +44,12 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void testThatCustomerCanUpdateHisProfile() throws CustomerWithEmailOrUsernameExist {
+    void testThatCustomerCanUpdateHisProfile() throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException {
         updateCustomerRequest.setFirstname("madina");
         updateCustomerRequest.setLastname("savage");
 
-        updateCustomerRequest.setAddress("lagos Island");
         updateResponse = services.updateProfile("Idman",updateCustomerRequest);
-        assertThat(updateResponse.getAddress().contains("emiryaha")
-                && updateResponse.getFirstname().contains("iii")).isFalse();
+        assertThat(updateResponse.getFirstname().contains("iii")).isFalse();
         assertThat(updateResponse).isNotNull();
       assertThat(updateResponse.getFirstname().contains("madina") && updateResponse.getLastname().contains("savage")).isTrue();
 

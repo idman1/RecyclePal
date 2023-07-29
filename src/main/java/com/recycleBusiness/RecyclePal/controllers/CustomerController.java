@@ -8,6 +8,7 @@ import com.recycleBusiness.RecyclePal.dto.responce.CustomerSubmitResponse;
 import com.recycleBusiness.RecyclePal.dto.responce.CustomerUpdateResponse;
 import com.recycleBusiness.RecyclePal.exception.CustomerNotSaveIntoDataBase;
 import com.recycleBusiness.RecyclePal.exception.CustomerWithEmailOrUsernameExist;
+import com.recycleBusiness.RecyclePal.exception.UsernameNotFoundException;
 import com.recycleBusiness.RecyclePal.exception.WasteNotCreated;
 import com.recycleBusiness.RecyclePal.service.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -40,15 +41,16 @@ public class CustomerController {
         try {
             var response = service.updateProfile(username,request);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
-        } catch (CustomerWithEmailOrUsernameExist e) {
+        } catch (CustomerWithEmailOrUsernameExist | UsernameNotFoundException e) {
             var response = new CustomerUpdateResponse();
             response.setMessage(e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }
 
+
     @PostMapping("/createWasteResponse")
-    public ResponseEntity<?> createWasteRequest(CustomerSubmitRequest request){
+    public ResponseEntity<?> createWasteRequest(@RequestBody CustomerSubmitRequest request){
         try {
             var response = service.submitRequest(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);

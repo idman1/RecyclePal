@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table
 public class WasteCollectionRequest {
     @Id
     @SequenceGenerator(
