@@ -16,7 +16,7 @@ import com.recycleBusiness.RecyclePal.exception.WasteNotCreated;
 public interface CustomerServices {
     CustomerRegistrationResponse customerRegistration(CustomerRegistrationRequest registrationRequest) throws CustomerWithEmailOrUsernameExist, CustomerNotSaveIntoDataBase;
     CustomerLoginResponse login(CustomerLoginRequest LoginRequest);
-    CustomerUpdateResponse updateProfile(String username,UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException;
+    CustomerUpdateResponse updateProfile(UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException;
 
     CustomerSubmitResponse submitRequest(CustomerSubmitRequest request) throws WasteNotCreated;
 

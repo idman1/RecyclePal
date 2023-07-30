@@ -12,6 +12,7 @@ import com.recycleBusiness.RecyclePal.exception.UsernameNotFoundException;
 import com.recycleBusiness.RecyclePal.exception.WasteNotCreated;
 import com.recycleBusiness.RecyclePal.service.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/customer")
+@Slf4j
 public class CustomerController {
     private final CustomerServiceImpl service;
 
@@ -34,12 +36,12 @@ public class CustomerController {
         }
     }
 
-   	@PatchMapping("/completeRegistration/{username}")
+   	@PostMapping("/completeRegistration/")
     public ResponseEntity<CustomerUpdateResponse> completeRegistration(
-            @PathVariable("username") String username,
             @RequestBody UpdateCustomerRequest request){
+        log.info("checking for username passed {}",request.getFirstname());
         try {
-            var response = service.updateProfile(username,request);
+            var response = service.updateProfile(request);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } catch (CustomerWithEmailOrUsernameExist | UsernameNotFoundException e) {
             var response = new CustomerUpdateResponse();

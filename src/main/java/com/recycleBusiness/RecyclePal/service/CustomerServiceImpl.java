@@ -17,6 +17,8 @@ import com.recycleBusiness.RecyclePal.service.mail.SendMailImpl;
 import com.recycleBusiness.RecyclePal.utils.AppUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ import static com.recycleBusiness.RecyclePal.utils.ResponseMessage.USER_REGISTRA
 import static com.recycleBusiness.RecyclePal.utils.ResponseMessage.WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerServiceImpl  implements  CustomerServices{
     private final CustomerRepository customerRepository;
@@ -66,12 +69,15 @@ public class CustomerServiceImpl  implements  CustomerServices{
 
     @Override
     @Transactional
-    public CustomerUpdateResponse updateProfile(String username ,UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException {
+    public CustomerUpdateResponse updateProfile(UpdateCustomerRequest request) throws CustomerWithEmailOrUsernameExist, UsernameNotFoundException {
+
         Customer updateCustomer=
-                customerRepository.findCustomerByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException(String.format(USERNAME_NOT_FOUND,username)));
+                customerRepository.findCustomerByUsername(request.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException(String.format(USERNAME_NOT_FOUND,request.getUsername())));
         if (request.getFirstname() != null)
             updateCustomer.setFirstname(request.getFirstname());
+
+
 
         if (request.getLastname() != null)
             updateCustomer.setLastname(request.getLastname());
