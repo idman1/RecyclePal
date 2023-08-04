@@ -63,7 +63,6 @@ public class CustomerServiceImpl  implements  CustomerServices{
 
     @Override
     public CustomerLoginResponse login(CustomerLoginRequest LoginRequest) {
-
         return null;
     }
 
@@ -77,8 +76,6 @@ public class CustomerServiceImpl  implements  CustomerServices{
         if (request.getFirstname() != null)
             updateCustomer.setFirstname(request.getFirstname());
 
-
-
         if (request.getLastname() != null)
             updateCustomer.setLastname(request.getLastname());
 
@@ -89,19 +86,19 @@ public class CustomerServiceImpl  implements  CustomerServices{
         return buildUpdateResponse(updateCustomer);
     }
 
-    @Override
     public CustomerSubmitResponse submitRequest(CustomerSubmitRequest request) throws WasteNotCreated {
-        Customer customer = modelMapper.map(request,Customer.class);
+        Customer customer = modelMapper.map(request, Customer.class);
         WasteCollectionRequestDto wasteCollection = wasteCollectionBuild(request);
+        customer.setAddress(wasteCollection.getAddress());
         wasteCollection.setRequesterId(customer.getId());
         wasteCollectionServices.createRequestDetails(wasteCollection);
         return CustomerSubmitResponse.builder().message(WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED).build();
     }
-    private WasteCollectionRequestDto wasteCollectionBuild( CustomerSubmitRequest request){
+    private WasteCollectionRequestDto wasteCollectionBuild(CustomerSubmitRequest request) {
         return WasteCollectionRequestDto.builder()
                 .createdTime(request.getCreatedTime())
-                .address(request.getAddress())
                 .pickedUptime(request.getPickedUptime())
+                .quantity(request.getQuantity())
                 .build();
     }
 

@@ -1,5 +1,4 @@
 package com.recycleBusiness.RecyclePal.controllers;
-
 import com.recycleBusiness.RecyclePal.dto.request.CustomerRegistrationRequest;
 import com.recycleBusiness.RecyclePal.dto.request.CustomerSubmitRequest;
 import com.recycleBusiness.RecyclePal.dto.request.UpdateCustomerRequest;
@@ -24,42 +23,44 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerServiceImpl service;
 
-	@PostMapping("/register")
-    public ResponseEntity<CustomerRegistrationResponse> registrationResponse(@RequestBody CustomerRegistrationRequest registrationRequest){
+    @PostMapping("/register")
+    public ResponseEntity<CustomerRegistrationResponse> registrationResponse(@RequestBody CustomerRegistrationRequest registrationRequest) {
         try {
-            var response = service.customerRegistration(registrationRequest);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            CustomerRegistrationResponse response = service.customerRegistration(registrationRequest);
+            return ResponseEntity.ok(response);
         } catch (CustomerWithEmailOrUsernameExist | CustomerNotSaveIntoDataBase e) {
-            var response = new CustomerRegistrationResponse();
+            CustomerRegistrationResponse response = new CustomerRegistrationResponse();
             response.setMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
-   	@PostMapping("/completeRegistration/")
+
+    @PatchMapping("/completeRegistration/")
     public ResponseEntity<CustomerUpdateResponse> completeRegistration(
-            @RequestBody UpdateCustomerRequest request){
-        log.info("checking for username passed {}",request.getFirstname());
+            @RequestBody UpdateCustomerRequest request) {
         try {
-            var response = service.updateProfile(request);
+            CustomerUpdateResponse response = service.updateProfile(request);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } catch (CustomerWithEmailOrUsernameExist | UsernameNotFoundException e) {
-            var response = new CustomerUpdateResponse();
+            CustomerUpdateResponse response = new CustomerUpdateResponse();
+            response.setMessage(e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @PostMapping("/createWasteResponse")
+    public ResponseEntity<?> createWasteRequest(@RequestBody CustomerSubmitRequest request) {
+        try {
+            CustomerSubmitResponse response = service.submitRequest(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (WasteNotCreated e) {
+            var response =  new CustomerSubmitResponse();
             response.setMessage(e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }
 
 
-    @PostMapping("/createWasteResponse")
-    public ResponseEntity<?> createWasteRequest(@RequestBody CustomerSubmitRequest request){
-        try {
-            var response = service.submitRequest(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (WasteNotCreated e) {
-            var response = new CustomerSubmitResponse();
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
 
 }

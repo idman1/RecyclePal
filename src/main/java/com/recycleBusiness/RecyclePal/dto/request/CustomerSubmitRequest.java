@@ -2,26 +2,25 @@ package com.recycleBusiness.RecyclePal.dto.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.recycleBusiness.RecyclePal.data.models.Address;
-import com.recycleBusiness.RecyclePal.data.models.Customer;
-import jakarta.persistence.Entity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CustomerSubmitRequest {
+    private Integer requesterId;
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime createdTime;
+    private LocalDate createdTime;
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime pickedUptime;
+    private LocalDate pickedUptime;
     private String quantity;
     private String description;
-    private Address address;
     private boolean isPicked;
 }

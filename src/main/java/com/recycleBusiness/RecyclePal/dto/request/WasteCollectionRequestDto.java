@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.recycleBusiness.RecyclePal.data.models.Address;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,9 +16,9 @@ import java.time.LocalDateTime;
 public class WasteCollectionRequestDto {
     private Integer requesterId;
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime createdTime;
+    private LocalDate createdTime;
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime pickedUptime;
+    private LocalDate pickedUptime;
     private String quantity;
     private Address address;
     private boolean isPicked;

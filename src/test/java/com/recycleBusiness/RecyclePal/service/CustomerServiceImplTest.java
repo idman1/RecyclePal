@@ -48,12 +48,10 @@ class CustomerServiceImplTest {
         updateCustomerRequest.setFirstname("madina");
         updateCustomerRequest.setLastname("savage");
 
-        updateResponse = services.updateProfile("Idman",updateCustomerRequest);
+        updateResponse = services.updateProfile(updateCustomerRequest);
         assertThat(updateResponse.getFirstname().contains("iii")).isFalse();
         assertThat(updateResponse).isNotNull();
       assertThat(updateResponse.getFirstname().contains("madina") && updateResponse.getLastname().contains("savage")).isTrue();
-
-
 
     }
 }

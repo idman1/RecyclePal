@@ -19,7 +19,6 @@ public class WasteCollectionController {
     @RequestMapping
 
     public ResponseEntity<?> createWaste(@RequestBody WasteCollectionRequestDto requestDto){
-
         try {
            var response = services.createRequestDetails(requestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -28,7 +27,6 @@ public class WasteCollectionController {
             response.setMessage(e.getMessage());
            return ResponseEntity.badRequest().body(response);
         }
-
 
     }
 }

@@ -25,8 +25,8 @@ public class WasteCollectionRequest {
     private Integer wasteId;
     private Integer requesterId;
     private Integer pickerId;
-    private LocalDateTime createdTime;
-    private LocalDateTime pickedUptime;
+    private LocalDate createdTime;
+    private LocalDate pickedUptime;
     private String quantity;
     private String description;
     @OneToOne
